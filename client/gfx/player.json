@@ -1,0 +1,25 @@
+{
+  "image" : "gfx/player.gif",
+  "coords" : {
+    "default"         : {"x":62 , "y":48, "w" : 14 , "h" : 19},
+    "standing-left"   : {"x":52 , "y":26, "w" : 14 , "h" : 19},
+    "standing-right"  : {"x":274 , "y":26, "w" : 14 , "h" : 19},
+    "standing-up"     : {"x":135 , "y":5, "w" : 14 , "h" : 19},
+    "standing-down"   : {"x":62 , "y":48, "w" : 14 , "h" : 19},
+    "walk-down1"      : {"x":79 , "y":48, "w" : 15 , "h" : 19},
+    "walk-down2"      : {"x":97 , "y":48, "w" : 15 , "h" : 19},
+    "walk-up1"        : {"x":189 , "y":5, "w" : 14 , "h" : 19},
+    "walk-up2"        : {"x":206 , "y":5, "w" : 14 , "h" : 19},
+    "walk-left1"      : {"x":35  , "y":27, "w" : 14 , "h" : 18},
+    "walk-left2"      : {"x":138 , "y":27, "w" : 14 , "h" : 18},
+    "walk-right1"     : {"x":291 , "y":27, "w" : 14 , "h" : 18},
+    "walk-right2"     : {"x":204 , "y":27, "w" : 14 , "h" : 18},
+    "shadow"          : {"x":0 , "y":0, "w" : 16 , "h" : 5}
+  },
+  "animation" : {
+    "walking-left"    : ["walk-left1", "standing-left", "walk-left2", "standing-left"],
+    "walking-right"   : ["walk-right1", "standing-right", "walk-right2", "standing-right"],
+    "walking-up"      : ["walk-up1", "standing-up", "walk-up2", "standing-up"],
+    "walking-down"    : ["walk-down1", "standing-down", "walk-down2", "standing-down"]
+  }
+}

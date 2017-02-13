@@ -1,0 +1,118 @@
+<center>
+<canvas id="ctx" width="720" height="480" style="border: 1px solid black;"></canvas>
+</center>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script src="js/fps.js"></script>
+<script src="js/entities.js"></script>
+<script src="js/events.js"></script>
+<script src="js/imageEngine.js"></script>
+<script src="js/maps.js"></script>
+<script>
+// Start socket.io
+var socket = io.connect('/');
+socket.on('onconnected', function( data ) {
+  //Note that the data is the object we sent from the server, as is. So we can assume its id exists.
+  console.log( 'Connected successfully to the socket.io server. My server side ID is ' + data.id );
+});
+
+// Get a hold of the canvas..
+var ctx = document.getElementById('ctx').getContext('2d');
+
+// Define Constant Variables
+var WIDTH       = 720;
+var HEIGHT      = 480;
+var TILE_WIDTH  = 16*3; // 3 times original size
+var TILE_HEIGHT = 16*3;
+
+// Interatcion.js later maybe?
+document.onmousedown = function(mouse){
+	if(mouse.which === 1)
+		player.pressingMouseLeft = true;
+	else
+		player.pressingMouseRight = true;
+
+  /// Debugging, ease of access.. getting coordinates of mouse.
+  if(mouse.which === 2) {
+    let x = mouse.pageX;
+    let y = mouse.pageY;
+    var rect = document.getElementById('ctx').getBoundingClientRect();
+    x -= rect.left;
+    y -= rect.top;
+    x = Math.floor(x / 16);
+    y = Math.floor(y / 16);
+    x += maps.topX;
+    y += maps.topY;
+    console.log(x+","+y);
+    mouse.preventDefault();
+
+  }
+
+}
+document.onmouseup = function(mouse){
+	if(mouse.which === 1)
+		player.pressingMouseLeft = false;
+	else
+		player.pressingMouseRight = false;
+}
+document.oncontextmenu = function(mouse){
+	mouse.preventDefault();
+}
+document.onkeydown = function(event){
+	if(event.keyCode === 68)	//d
+		player.pressingRight = true;
+	else if(event.keyCode === 83)	//s
+		player.pressingDown = true;
+	else if(event.keyCode === 65) //a
+		player.pressingLeft = true;
+	else if(event.keyCode === 87) // w
+		player.pressingUp = true;
+  else if(event.keyCode === 69) // e
+		player.pressingUse = true;
+
+}
+document.onkeyup = function(event){
+	if(event.keyCode === 68)	//d
+		player.pressingRight = false;
+	else if(event.keyCode === 83)	//s
+		player.pressingDown = false;
+	else if(event.keyCode === 65) //a
+		player.pressingLeft = false;
+	else if(event.keyCode === 87) // w
+		player.pressingUp = false;
+  else if(event.keyCode === 69) // e
+		player.pressingUse = false;
+}
+
+// Load Classes
+var fps      = FPS(30);
+var maps     = Maps("kanto", "maps/kanto.png");
+var player   = Player2(0,6,7,3,0);
+var entities = [];
+entities[1]  = NPC(73,276,1,['L','L','U','U','U','R','R','R','R','R','R','R','R','R','D','D','D','L','L','L','L','L','L','L']);
+entities[2]  = NPC(63,270,2,['R','R','R','R','R','R','L','L','L','L','L','L']);
+
+var gameLoop = function() {
+  // Request a new frame:
+  requestAnimationFrame(gameLoop);
+
+  // Check if we are ready to draw
+  if(fps.readyForNewFrame()) {
+    // Clear canvas
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+    // Draw stuff
+
+    maps.draw();
+    maps2.draw();
+    player.update();
+    for(var i = 1; i <entities.length; i++) {
+      entities[i].update();
+    }
+    // Show debug data:
+    ctx.font = "15px Arial";
+    ctx.fillText("FPS: "+fps.fps + "X: "+player.x+ "Y: "+player.y,10,50);
+
+  }
+}
+gameLoop();
+</script>

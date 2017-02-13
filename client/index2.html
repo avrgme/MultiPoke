@@ -1,0 +1,25 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!--CSS-->
+<style>
+div {
+  position: absolute;
+  left:100px;
+  top:100px;
+}
+</style>
+
+<!--HTML-->
+<div id="myDiv">This is my content</div>
+
+<!--JS-->
+<script>
+// Plain
+document.getElementById('myDiv').innerHTML = "New information!";
+// Jquery
+$("#myDiv").html("Even Newer Information");
+
+$("#myDiv").animate({left:'200px'}, 2000);
+
+
+</script>

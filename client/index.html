@@ -1,0 +1,56 @@
+<center>
+<canvas id="canvas" width="720" height="480" style="border: 1px solid black;"></canvas>
+</center>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script src="js/main.js"></script>
+<script src="js/gameloop.js"></script>
+<script src="js/inputhandling.js"></script>
+<script src="js/imageengine.js"></script>
+<script src="js/maps.js"></script>
+<script src="js/player.js"></script>
+<script src="js/entities.js"></script>
+
+<script>
+// Start socket.io
+var socket = io.connect('/');
+socket.on('onconnected', function( data ) {
+  //console.log( 'Connected successfully to the socket.io server. My server side ID is ' + data.id );
+});
+
+// Get a hold of the canvas..
+var ctx = document.getElementById('canvas').getContext('2d');
+ctx['mozImageSmoothingEnabled'] = false;
+ctx.msImageSmoothingEnabled = false;
+ctx['imageSmoothingEnabled'] = false;
+
+// Define Constant Variables
+var WIDTH            = 720;
+var HEIGHT           = 480;
+var TILE_WIDTH       = 16;
+var TILE_HEIGHT      = 16;
+var SCALE_MULTIPLIER = 3;
+
+
+// Load images / tiles
+var Img       = {};
+Img.player    = new ImageEngine("player", "sprite", "gfx/player.json");
+Img.npc       = new ImageEngine("npc", "sprite", "gfx/npc.json");
+
+// Load Classes
+var main     = Main();
+var gameloop = Gameloop(60, 30, main);
+var ih       = InputHandling(); // ih or controls.??? :P ih is shorter but harder to read..
+var maps     = Maps("kanto");
+var player   = Player(70,267, Img.player);
+
+var entities = [];
+entities.push(Entity("static","static",70,265,"down",Img.npc));
+entities.push(Entity("static","static",71,265,"down",Img.npc));
+entities.push(Entity("static","static",72,265,"down",Img.npc));
+entities.push(Entity("static","static",73,265,"down",Img.npc));
+
+
+// Start the game!
+gameloop.start();
+
+</script>

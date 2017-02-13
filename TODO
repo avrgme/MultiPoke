@@ -1,0 +1,14 @@
+INPUT HANDLING:
+  // PROBLEM: jortenmilo : When you walk upwards or downwards it will
+  // override that when you move sidewards. But not otherwise.
+
+// remember to draw entities in "order" based on height (Y Level)
+
+
+
+
+Entity "Skin" -> Player
+Entity "Skin" -> NPC
+Entity "Skin" -> Bush
+
+"Player Class" receives an "entity" he can control..
